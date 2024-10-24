@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://m8qqivo60ujf"]
+
+[ext_resource type="Script" path="res://field.gd" id="1_66ww0"]
+[ext_resource type="Texture2D" uid="uid://dnyrgnuwkww7o" path="res://art/Field.png" id="1_bxagk"]
+[ext_resource type="Shader" path="res://dice.gdshader" id="2_2aqtw"]
+[ext_resource type="Texture2D" uid="uid://7a4byhmmiraq" path="res://art/dice1.png" id="4_bxjtm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ehv0m"]
+resource_local_to_scene = true
+shader = ExtResource("2_2aqtw")
+shader_parameter/bonus = 1
+
+[node name="Field1" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+disabled = true
+texture_normal = ExtResource("1_bxagk")
+texture_pressed = ExtResource("1_bxagk")
+texture_hover = ExtResource("1_bxagk")
+texture_disabled = ExtResource("1_bxagk")
+texture_focused = ExtResource("1_bxagk")
+script = ExtResource("1_66ww0")
+
+[node name="Dice" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_ehv0m")
+position = Vector2(24, 24)
+texture = ExtResource("4_bxjtm")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

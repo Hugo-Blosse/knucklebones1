@@ -1,4 +1,5 @@
 extends Control
+class_name Main
 
 
 var rng : RandomNumberGenerator = RandomNumberGenerator.new()
@@ -9,6 +10,9 @@ func _ready() -> void:
 	rng.seed = Time.get_unix_time_from_datetime_string(Time.get_datetime_string_from_system())
 	$P2FieldManager/TextureButton.disabled = true
 	$P2FieldManager/TextureButton.position.y = 0
+	$P2FieldManager/PointCounter.default_label_offset = 300
+	$P2FieldManager.start()
+	$P1FieldManager.start()
 
 
 func dice_roll_result() -> int:
@@ -25,17 +29,14 @@ func roll(fm : FieldManager) -> void:
 func _end() -> void:
 	var score1 : int = $P1FieldManager._game_ended()
 	var score2 : int = $P2FieldManager._game_ended()
-	print(str(score1, " ", score2))
+	$EndScreen/VBoxContainer/Label2.text = str(score1, " ", score2)
 	if score1 > score2:
-		print("1 win")
+		$EndScreen/VBoxContainer/Label.text = "1 win"
 	elif  score1 < score2:
-		print("2 win")
+		$EndScreen/VBoxContainer/Label.text = "2 win"
 	else:
-		print("draw")
-
-#func _physics_process(_delta : float) -> void:
-	#print($P2FieldManager/TextureButton.disabled)
-	#print($P1FieldManager/TextureButton.disabled)
+		$EndScreen/VBoxContainer/Label.text = "draw"
+	$EndScreen.visible = true
 
 
 func _check_enemy_dices(val, field, fm):

@@ -1,18 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://cxnpx7rgdpnwd"]
+[gd_scene load_steps=4 format=3 uid="uid://cxnpx7rgdpnwd"]
 
 [ext_resource type="Script" path="res://field_manager.gd" id="1_u4yeu"]
+[ext_resource type="PackedScene" uid="uid://dgf1m1aslr6y0" path="res://point_counter.tscn" id="3_2bioy"]
 [ext_resource type="Texture2D" uid="uid://7a4byhmmiraq" path="res://art/dice1.png" id="3_p02oy"]
 
 [node name="FieldManager" type="ColorRect"]
 anchors_preset = -1
-anchor_right = 0.035
-anchor_bottom = 0.062
-offset_right = 463.2
-offset_bottom = 280.32
+anchor_right = 1.0
+anchor_bottom = 0.5
 size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(0.431373, 1, 1, 1)
 script = ExtResource("1_u4yeu")
+
+[node name="PointCounter" parent="." instance=ExtResource("3_2bioy")]
+layout_mode = 1
 
 [node name="TextureButton" type="TextureButton" parent="."]
 layout_mode = 1

@@ -1,4 +1,5 @@
-res://main.tscn
+res://computer.tscn
 res://dice.gdshader
-res://field_manager.tscn
-res://field.tscn
+res://computer.gd
+res://field_manager.gd
+res://Main.gd

@@ -20,14 +20,11 @@ signal end()
 @onready var texture_button : TextureButton = $TextureButton
 
 
-func _ready() -> void:
-	start()
-
-
 func start(num_of_fields : int = 9) -> void:
 	fields.clear()
 	rowscols = int(sqrt(num_of_fields))
 	for i in rowscols:
+		$PointCounter.create_label(i, rowscols)
 		for j in rowscols:
 			var field : Field = FieldBase.instantiate()
 			add_child(field)
@@ -49,10 +46,18 @@ func check_your_column(val : int, field : Field) -> void:
 			fields[[field.col_num, j]].bonus_score(bonus_counter)
 
 
+func set_points(col_num: int) -> int:
+	var value : int
+	for j in rowscols:
+		value += fields[[col_num, j]].val * fields[[col_num, j]].bonus
+	return value
+
+
 func check_enemy_column(val : int, field : Field) -> void:
 	for j in rowscols:
 		if fields[[field.col_num, j]].get_val() == val:
 			fields[[field.col_num, j]].destroy()
+	$PointCounter.set_label_value(field.col_num, set_points(field.col_num))
 
 
 func _on_texture_button_pressed() -> void:
@@ -71,6 +76,7 @@ func _on_field_button_pressed(field : Field) -> void:
 	check_your_column(value, field)
 	change_num_of_filled_fields(1)
 	set_fields_disabled(true)
+	$PointCounter.set_label_value(field.col_num, set_points(field.col_num))
 	emit_signal("check_enemy_dices", value, field, self)
 
 

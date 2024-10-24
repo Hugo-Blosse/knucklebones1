@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7j78ebvyx0tb"]
+
+[ext_resource type="Script" path="res://computer.gd" id="1_mdbib"]
+[ext_resource type="PackedScene" uid="uid://cxnpx7rgdpnwd" path="res://field_manager.tscn" id="2_untyx"]
+
+[node name="Computer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mdbib")
+
+[node name="P1FieldManager" parent="." instance=ExtResource("2_untyx")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+
+[node name="P2FieldManager" parent="." instance=ExtResource("2_untyx")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+
+[connection signal="check_enemy_dices" from="P1FieldManager" to="." method="_on_p_1_field_manager_check_enemy_dices"]
+[connection signal="end" from="P1FieldManager" to="." method="_end"]
+[connection signal="rolled" from="P1FieldManager" to="." method="roll"]
+[connection signal="check_enemy_dices" from="P2FieldManager" to="P1FieldManager" method="check_enemy_column"]
+[connection signal="end" from="P2FieldManager" to="." method="_end"]
+[connection signal="rolled" from="P2FieldManager" to="." method="roll"]

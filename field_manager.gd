@@ -31,6 +31,7 @@ func start(num_of_fields : int = 9) -> void:
 			field.name = str("Field", i, j)
 			fields[[i, j]] = field
 			field.col_num = i
+			field.row_num = j
 			field.position = Vector2(480 * (i + 1)/(rowscols + 1), 320 * (j + 1)/(rowscols + 1)) - Vector2(24, 24)
 			field.selected.connect(_on_field_button_pressed)
 			field.destroyed.connect(change_num_of_filled_fields)
@@ -47,7 +48,7 @@ func check_your_column(val : int, field : Field) -> void:
 
 
 func set_points(col_num: int) -> int:
-	var value : int
+	var value : int = 0
 	for j in rowscols:
 		value += fields[[col_num, j]].val * fields[[col_num, j]].bonus
 	return value
@@ -77,7 +78,7 @@ func _on_field_button_pressed(field : Field) -> void:
 	change_num_of_filled_fields(1)
 	set_fields_disabled(true)
 	$PointCounter.set_label_value(field.col_num, set_points(field.col_num))
-	emit_signal("check_enemy_dices", value, field, self)
+	emit_signal("check_enemy_dices", value, field)
 
 
 func set_fields_disabled(is_disabled : bool) -> void:
@@ -93,7 +94,14 @@ func change_num_of_filled_fields(num : int = -1) -> void:
 
 
 func _game_ended() -> int:
-	var score : int
+	var score : int = 0
 	for f in fields.keys():
 		score += fields[f].get_points()
 	return score
+
+
+func restart() -> void:
+	for f in fields.keys():
+		fields[f].destroy()
+	for i in rowscols:
+		$PointCounter.set_label_value(i, set_points(i))

@@ -5,6 +5,7 @@ class_name Field
 var val : int = 0
 var bonus : int = 0
 var col_num : int
+var row_num : int
 
 
 signal selected(field : Field)

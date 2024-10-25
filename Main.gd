@@ -39,7 +39,7 @@ func _end() -> void:
 	$EndScreen.visible = true
 
 
-func _check_enemy_dices(val, field, fm):
+func _check_enemy_dices(val, field, fm) -> void:
 	if fm == $P1FieldManager:
 		$P2FieldManager.check_enemy_column(val, field)
 	else:

@@ -1,5 +1,11 @@
-res://computer.tscn
+res://main.tscn
 res://dice.gdshader
-res://computer.gd
+res://field_manager.tscn
+res://field.tscn
+res://point_counter.tscn
+res://computer.tscn
 res://field_manager.gd
+res://computer.gd
+res://field.gd
 res://Main.gd
+res://point_counter.gd

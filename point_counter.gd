@@ -5,6 +5,9 @@ var default_label_offset : int = 0
 var is_2_player : bool = false
 
 
+@onready var score_label : Label = $Score
+
+
 func create_label(i : int, rowscols : int) -> void:
 	var label : Label = Label.new()
 	label.position = Vector2(480 * (i + 1)/(rowscols + 1) - 5, default_label_offset)
@@ -18,3 +21,8 @@ func create_label(i : int, rowscols : int) -> void:
 func set_label_value(i : int, value : int) -> void:
 	var label : Label = get_node(str(i))
 	label.text = str(value)
+	var score : int = 0
+	score_label.text = str(0)
+	for l in get_children():
+		score += int(l.text)
+	score_label.text = str(score)

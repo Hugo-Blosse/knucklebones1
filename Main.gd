@@ -29,14 +29,14 @@ func roll(fm : FieldManager) -> void:
 func _end() -> void:
 	var score1 : int = $P1FieldManager._game_ended()
 	var score2 : int = $P2FieldManager._game_ended()
-	$EndScreen/VBoxContainer/Label2.text = str(score1, " ", score2)
+	var s : String = ""
 	if score1 > score2:
-		$EndScreen/VBoxContainer/Label.text = "1 win"
+		s = "1 win"
 	elif  score1 < score2:
-		$EndScreen/VBoxContainer/Label.text = "2 win"
+		s = "2 win"
 	else:
-		$EndScreen/VBoxContainer/Label.text = "draw"
-	$EndScreen.visible = true
+		s = "draw"
+	$EndScreen.set_labels_text(str(score1, " ", score2), s)
 
 
 func _check_enemy_dices(val, field, fm) -> void:
@@ -44,3 +44,13 @@ func _check_enemy_dices(val, field, fm) -> void:
 		$P2FieldManager.check_enemy_column(val, field)
 	else:
 		$P1FieldManager.check_enemy_column(val, field)
+
+
+func _restart() -> void:
+	$P1FieldManager.restart()
+	$P2FieldManager.restart()
+	$EndScreen.visible = false
+
+
+func _exit():
+	get_tree().change_scene_to_file("res://mmenu.tscn")

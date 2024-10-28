@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://cyhsp5qsgtr1d"]
+
+[ext_resource type="Script" path="res://computer.gd" id="1_kymtk"]
+[ext_resource type="PackedScene" uid="uid://cxnpx7rgdpnwd" path="res://field_manager.tscn" id="2_ywei4"]
+[ext_resource type="PackedScene" uid="uid://0muweitw4l1e" path="res://end_screen.tscn" id="3_m7xcp"]
+
+[node name="PVE" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kymtk")
+
+[node name="P1FieldManager" parent="." instance=ExtResource("2_ywei4")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_top = 320.0
+offset_right = 480.0
+offset_bottom = 640.0
+
+[node name="P2FieldManager" parent="." instance=ExtResource("2_ywei4")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 480.0
+offset_bottom = 320.0
+
+[node name="EndScreen" parent="." instance=ExtResource("3_m7xcp")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -64.0
+offset_right = 120.0
+offset_bottom = 64.0
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="check_enemy_dices" from="P1FieldManager" to="." method="_on_p_1_field_manager_check_enemy_dices"]
+[connection signal="end" from="P1FieldManager" to="." method="_end"]
+[connection signal="rolled" from="P1FieldManager" to="." method="roll"]
+[connection signal="check_enemy_dices" from="P2FieldManager" to="." method="_check_enemy_dices"]
+[connection signal="end" from="P2FieldManager" to="." method="_end"]
+[connection signal="rolled" from="P2FieldManager" to="." method="roll"]
+[connection signal="exit" from="EndScreen" to="." method="_exit"]
+[connection signal="restart" from="EndScreen" to="." method="_restart"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

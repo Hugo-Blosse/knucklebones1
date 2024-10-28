@@ -78,7 +78,7 @@ func _on_field_button_pressed(field : Field) -> void:
 	change_num_of_filled_fields(1)
 	set_fields_disabled(true)
 	$PointCounter.set_label_value(field.col_num, set_points(field.col_num))
-	emit_signal("check_enemy_dices", value, field)
+	emit_signal("check_enemy_dices", value, field, self)
 
 
 func set_fields_disabled(is_disabled : bool) -> void:

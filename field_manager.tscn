@@ -10,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 size_flags_horizontal = 4
 size_flags_vertical = 4
-color = Color(0.431373, 1, 1, 1)
+color = Color(0.964706, 0.258824, 1, 1)
 script = ExtResource("1_u4yeu")
 
 [node name="PointCounter" parent="." instance=ExtResource("3_2bioy")]

@@ -19,7 +19,7 @@ func _ready() -> void:
 
 
 func _check_enemy_dices(val, field, _fm) -> void:
-	p_2_field_manager.check_enemy_column(val, field)
+	$P1FieldManager.check_enemy_column(val, field)
 
 
 func roll(fm : FieldManager) -> void:
@@ -27,7 +27,7 @@ func roll(fm : FieldManager) -> void:
 	fm.change_sprite(result)
 
 
-func _on_p_1_field_manager_check_enemy_dices(val, field) -> void:
+func _on_p_1_field_manager_check_enemy_dices(val, field, _fm) -> void:
 	p_2_field_manager.check_enemy_column(val, field)
 	p_2_field_manager._on_texture_button_pressed()
 	p_2_field_manager.texture_button.disabled = true
@@ -48,15 +48,6 @@ func check_next_move() -> void:
 			p_2_field_manager._on_field_button_pressed(p_2_field_manager.fields[[next_move_col, j]])
 			$P1FieldManager/TextureButton.disabled = false
 			return
-
-
-#func get_next_move_col() -> int:
-	#var row_with_max_value : Array = get_avalible_row_with_max_value_count()
-	#var avalible_cols = check_col_avalibility()
-	#if row_with_max_value[1] > 0 && avalible_cols.has(row_with_max_value[0]):
-		#return row_with_max_value[0]
-	#else:
-		#return avalible_cols[rng.randi_range(0, avalible_cols.size() -1)]
 
 
 func check_col_avalibility() -> Array:
@@ -102,3 +93,6 @@ func set_starting_fields_comparison() -> void:
 	for i in p_2_field_manager.rowscols:
 		for j in p_2_field_manager.rowscols:
 			fields_comparison[[i, j]] = [$P1FieldManager.fields[[i, j]], p_2_field_manager.fields[[i, j]]]
+
+
+

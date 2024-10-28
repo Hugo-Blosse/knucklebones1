@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctw5jefq47rif"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_jsx3e"]
+[ext_resource type="PackedScene" uid="uid://cxnpx7rgdpnwd" path="res://field_manager.tscn" id="2_dqse1"]
+[ext_resource type="Texture2D" uid="uid://bljwioevhp08e" path="res://icon.svg" id="3_fnnwu"]
+[ext_resource type="PackedScene" uid="uid://0muweitw4l1e" path="res://end_screen.tscn" id="4_qpxg1"]
+
+[node name="PVP" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jsx3e")
+
+[node name="P1FieldManager" parent="." instance=ExtResource("2_dqse1")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.0
+offset_top = -320.0
+offset_right = 240.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="P2FieldManager" parent="." instance=ExtResource("2_dqse1")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -240.0
+offset_top = -640.0
+offset_right = 240.0
+offset_bottom = -320.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(240, 220)
+scale = Vector2(3.75, 1)
+texture = ExtResource("3_fnnwu")
+
+[node name="EndScreen" parent="." instance=ExtResource("4_qpxg1")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -64.0
+offset_right = 120.0
+offset_bottom = 64.0
+
+[connection signal="check_enemy_dices" from="P1FieldManager" to="." method="_check_enemy_dices"]
+[connection signal="end" from="P1FieldManager" to="." method="_end"]
+[connection signal="rolled" from="P1FieldManager" to="." method="roll"]
+[connection signal="check_enemy_dices" from="P2FieldManager" to="." method="_check_enemy_dices"]
+[connection signal="end" from="P2FieldManager" to="." method="_end"]
+[connection signal="rolled" from="P2FieldManager" to="." method="roll"]
+[connection signal="exit" from="EndScreen" to="." method="_exit"]
+[connection signal="restart" from="EndScreen" to="." method="_restart"]

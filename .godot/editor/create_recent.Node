@@ -1,9 +1,9 @@
-Label
-Button
 Timer
-Control
+Button
 VBoxContainer
 ColorRect
+Label
+Control
 Sprite2D
 TextureRect
 TextureButton

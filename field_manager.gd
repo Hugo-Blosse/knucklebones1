@@ -68,6 +68,9 @@ func _on_texture_button_pressed() -> void:
 func change_sprite(num):
 	value = num
 	$TextureButton.texture_normal = ResourceLoader.load(str("res://art/dice", num, ".png"))
+
+
+func _on_roll_ended() -> void:
 	$TextureButton.disabled = true
 	set_fields_disabled(false)
 
@@ -75,10 +78,10 @@ func change_sprite(num):
 func _on_field_button_pressed(field : Field) -> void:
 	field.set_val(value)
 	check_your_column(value, field)
-	change_num_of_filled_fields(1)
 	set_fields_disabled(true)
 	$PointCounter.set_label_value(field.col_num, set_points(field.col_num))
 	emit_signal("check_enemy_dices", value, field, self)
+	change_num_of_filled_fields(1)
 
 
 func set_fields_disabled(is_disabled : bool) -> void:
@@ -93,7 +96,7 @@ func change_num_of_filled_fields(num : int = -1) -> void:
 		emit_signal("end")
 
 
-func _game_ended() -> int:
+func get_score() -> int:
 	var score : int = 0
 	for f in fields.keys():
 		score += fields[f].get_points()

@@ -45,6 +45,10 @@ offset_bottom = 64.0
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="DiceRollTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [connection signal="check_enemy_dices" from="P1FieldManager" to="." method="_on_p_1_field_manager_check_enemy_dices"]
 [connection signal="end" from="P1FieldManager" to="." method="_end"]
 [connection signal="rolled" from="P1FieldManager" to="." method="roll"]

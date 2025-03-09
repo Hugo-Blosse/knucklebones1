@@ -24,7 +24,7 @@ func start(num_of_fields : int = 9) -> void:
 	fields.clear()
 	rowscols = int(sqrt(num_of_fields))
 	for i in rowscols:
-		$PointCounter.create_label(i, rowscols)
+		$PointCounter.create_label(i)
 		for j in rowscols:
 			var field : Field = FieldBase.instantiate()
 			add_child(field)
@@ -32,7 +32,7 @@ func start(num_of_fields : int = 9) -> void:
 			fields[[i, j]] = field
 			field.col_num = i
 			field.row_num = j
-			field.position = Vector2(480 * (i + 1)/(rowscols + 1), 320 * (j + 1)/(rowscols + 1)) - Vector2(24, 24)
+			field.position = Vector2(self.size.x * (i + 1)/(rowscols + 1), self.size.y * (j + 1)/(rowscols + 1)) - Vector2(24, 24)
 			field.selected.connect(_on_field_button_pressed)
 			field.destroyed.connect(change_num_of_filled_fields)
 
@@ -48,10 +48,10 @@ func check_your_column(val : int, field : Field) -> void:
 
 
 func set_points(col_num: int) -> int:
-	var value : int = 0
+	var p_value : int = 0
 	for j in rowscols:
-		value += fields[[col_num, j]].val * fields[[col_num, j]].bonus
-	return value
+		p_value += fields[[col_num, j]].val * fields[[col_num, j]].bonus
+	return p_value
 
 
 func check_enemy_column(val : int, field : Field) -> void:

@@ -11,8 +11,11 @@ shader = ExtResource("2_2aqtw")
 shader_parameter/bonus = 1
 
 [node name="Field1" type="TextureButton"]
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = -1
+anchor_right = 0.1
+anchor_bottom = 0.075
+offset_right = -8.0
+offset_bottom = -8.0
 disabled = true
 texture_normal = ExtResource("1_bxagk")
 texture_pressed = ExtResource("1_bxagk")

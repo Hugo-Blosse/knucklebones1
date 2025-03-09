@@ -2,6 +2,9 @@ extends Control
 class_name Main
 
 
+@export var is_2_player : bool = false
+
+
 var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 var result : int = 0
 var rolls : int = 0
@@ -13,6 +16,8 @@ func _ready() -> void:
 	$P2FieldManager/TextureButton.disabled = true
 	$P2FieldManager/TextureButton.position.y = 0
 	$P2FieldManager/PointCounter.default_label_offset = 300
+	$P2FieldManager/PointCounter.is_2_player = is_2_player
+	$P2FieldManager/PointCounter/Score.scale.y = -1
 	$P2FieldManager.start()
 	$P1FieldManager.start()
 	$DiceRollTimer.timeout.connect(_on_dice_roll_timer_timeout)

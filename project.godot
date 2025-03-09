@@ -17,10 +17,13 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/viewport_width=480
-window/size/viewport_height=640
+window/size/viewport_width=1050
+window/size/viewport_height=2050
+window/stretch/scale=2.0
+window/handheld/orientation=1
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

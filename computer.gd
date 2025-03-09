@@ -11,6 +11,7 @@ var ai_level : int = 2
 
 func _ready() -> void:
 	rng.seed = Time.get_unix_time_from_datetime_string(Time.get_datetime_string_from_system())
+	ai_level = rng.randi_range(1, 2)
 	$P2FieldManager/TextureButton.disabled = true
 	$P2FieldManager/TextureButton.position.y = 0
 	$P2FieldManager/PointCounter.default_label_offset = 300
@@ -20,6 +21,7 @@ func _ready() -> void:
 	$DiceRollTimer.wait_time = 0.2
 	$DiceRollTimer.one_shot = true
 	set_starting_fields_comparison()
+	
 
 
 func _check_enemy_dices(val, field, _fm) -> void:
@@ -86,7 +88,6 @@ func get_avalible_col_with_max_value_count() -> int:
 		2 : 0
 	}
 	var p_2_val_counter_max : int = 0
-	
 	if ai_level == 2 && avalible_cols.size() > 1:
 		avalible_cols = check_enemy_fields(avalible_cols)
 	if avalible_cols.size() == 1:
@@ -111,48 +112,50 @@ func check_enemy_fields(avalible_cols : Array) -> Array:
 		for j in p_2_field_manager.rowscols:
 			ai_fields.append(fields_comparison.values()[k][1])
 			k += 1
-	
+
 	if $P1FieldManager.num_of_filled_fields > 6 && $P1FieldManager.get_score() > p_2_field_manager.get_score():
-		var enemy_same_val_fields : Array = get_list_of_enemy_vals_equal_to_ai_val(fields_comparison)
+		var enemy_same_val_fields : Array = get_list_of_enemy_vals_equal_to_ai_val(fields_comparison, avalible_cols)
 		if enemy_same_val_fields.max() > 0:
-			return avalible_cols.filter(func(num): return num == enemy_same_val_fields.bsearch(enemy_same_val_fields.max()))
+			return avalible_cols.filter(func(num): return num == enemy_same_val_fields.find(enemy_same_val_fields.max()))
 	elif p_2_field_manager.value <= 2:
-		var enemy_low_val_fields : Array = get_list_of_enemy_vals_equal_to_ai_val(fields_comparison)
+		var enemy_low_val_fields : Array = get_list_of_enemy_vals_equal_to_ai_val(fields_comparison, avalible_cols)
 		if enemy_low_val_fields.max() > 0:
-			avalible_cols.remove_at(enemy_low_val_fields.bsearch(enemy_low_val_fields.max()))
+			avalible_cols.remove_at(enemy_low_val_fields.find(enemy_low_val_fields.max()))
 	elif p_2_field_manager.value >= 4 && !check_for_same_field(p_2_field_manager.value):
 		var b : Array = []
-		for i in p_2_field_manager.rowscols:
+		for i in avalible_cols:
 			var l : int = 0
 			b.append(0)
-			for j in p_2_field_manager.rowscols:
+			for j in avalible_cols:
 				if fields_comparison[[i, j]][0].val <= 3 && fields_comparison[[i, j]][0].val != 0:
 					l += 11
 				elif fields_comparison[[i, j]][0].val > 3:
 					l += 10
 			b[i] = l
 		if b.max() > 0:
-			return avalible_cols.filter(func(num): return num == b.bsearch(b.max()))
+			var n = b.find(b.max())
+			var xd = avalible_cols.filter(func(num): return num == b.find(b.max()))
+			return avalible_cols.filter(func(num): return num == b.find(b.max()))
 	return avalible_cols
 
 
 func check_for_same_field(value : int, id : int = 1) -> bool:
 	for i in p_2_field_manager.rowscols:
 		for j in p_2_field_manager.rowscols:
-			if value == fields_comparison[[i, j]][id].value:
+			if value == fields_comparison[[i, j]][id].val:
 				return true
 	return false
 
 
-func get_list_of_enemy_vals_equal_to_ai_val(fields : Dictionary) -> Array:
+func get_list_of_enemy_vals_equal_to_ai_val(fields : Dictionary, avalible_cols: Array) -> Array:
 	var a : Array = []
-	for i in p_2_field_manager.rowscols:
+	for i in avalible_cols:
 		var k : int = 0
 		a.append(0)
-		for j in p_2_field_manager.rowscols:
+		for j in avalible_cols:
 			if fields[[i, j]][0].val == p_2_field_manager.value:
 				k += 1
-		a[i] = k
+		a[-1] = k
 	return a
 
 
@@ -161,6 +164,8 @@ func _restart() -> void:
 	p_2_field_manager.restart()
 	$EndScreen.visible = false
 	set_starting_fields_comparison()
+	p_2_field_manager.texture_button.disabled = true
+	$P1FieldManager/TextureButton.disabled = false
 
 
 func set_starting_fields_comparison() -> void:
